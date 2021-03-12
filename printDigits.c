@@ -13,7 +13,6 @@ void rPrintDigits(int n)
         rPrintDigits(n / 10);
         printf("%d\n", n % 10);
     }
-    
 }
 
 void printDigits()

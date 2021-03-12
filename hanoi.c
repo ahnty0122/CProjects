@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 직접 재귀로 구현
+// 직접 재귀로 하노이탑 구현
 void rHanoi(int n, char from, char aux, char to)
 {
     if(n == 1)

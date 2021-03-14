@@ -1,60 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ROW 4
-#define COLUMN 5
+#define SIZE 5
 
-// 나선형 행렬 만들기
-void spiral(int A[][COLUMN])
+// 홀수행은 오름차순, 짝수행은 내림차순
+void zigzag(int A[][SIZE])
 {
-    int left = 0;
-    int right = COLUMN - 1;
-    int top = 0;
-    int bottom = ROW - 1;
     int value = 1;
-    while((left <= right) && (top <= bottom))
+    for(int i = 0; i < SIZE; i++)
     {
-        for(int j = left; j <= right; j++)
-        {
-            A[top][j] = value;
-            value++;
-        }
-        top++;
-        if(top <= bottom)
-        {
-            for(int i = top; i <= bottom; i++)
+        if(i % 2 == 0)
+            for(int j = 0; j < SIZE; j++)
             {
-                A[i][right] = value;
+                A[i][j] = value;
                 value++;
             }
-        }
-        right--;
-        if(left <= right)
-        {
-            for(int j = left; j <= right; j++)
+        else
+            for(int j = SIZE - 1; j >= 0; j--)
             {
-                A[bottom][right - j + left] = value;
+                A[i][j] = value;
                 value++;
             }
-        }
-        bottom--;
-        if(top <= bottom)
-        {
-            for(int i = top; i <= bottom; i++)
-            {
-                A[bottom - i + top][left] = value;
-                value++;
-            }
-        }
-        left++;
     }
 }
 
-void printArray(int A[][COLUMN])
+// 행렬 출력 함수
+void printArray(int A[][SIZE])
 {
-    for(int i = 0; i < ROW; i++)
+    for(int i = 0; i < SIZE; i++)
     {
-        for(int j = 0; j < COLUMN; j++)
+        for(int j = 0; j < SIZE; j++)
             printf("%2d ", A[i][j]);
         printf("\n");
     }
@@ -62,7 +37,10 @@ void printArray(int A[][COLUMN])
 
 void main()
 {
-    int A[ROW][COLUMN] = {0}; 
-    spiral(A);
+    // 0으로 다 초기화
+    int A[SIZE][SIZE] = {0};
+    // 지그재그 행렬 생성
+    zigzag(A);
+    // 행렬 출력
     printArray(A);
 }

@@ -17,7 +17,7 @@ void init(ArrayList* L) // 주소 오니까 포인터 L로 받기
 // traverse method (접근 method)
 void traverse(ArrayList* L)
 {
-    for(int i = 0; i < L->n; i++)
+    for(int i = 0; i < L->n; i++) // 원소의 개수는 마지막 element 바로 다음 첫 번째 비어있는 칸 가리킴
         printf("[%d] ", L->V[i]); // data field값
     printf("\n");
 }

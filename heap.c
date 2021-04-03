@@ -37,6 +37,33 @@ void insertItem(HeapType *h, int key)
     upHeap(h);
 }
 
+void downHeap(HeapType *h)
+{
+    int temp = h->heap[1];
+    int parent = 1, child = 2;
+
+    while(child <= h->heap_size)
+    {
+        if((child < h->heap_size) && (h->heap[child] > h->heap[child + 1]))
+            child++;
+        if(temp <= h->heap[child])
+            break;
+        h->heap[parent] = h->heap[child];
+        parent = child;
+        child *= 2;
+    }
+    h->heap[parent] = temp;
+}
+
+int removeMin(HeapType *h)
+{
+    int key = h->heap[1]; // 루트 키
+    h->heap[1] = h->heap[h->heap_size]; // 마지막을 루트로
+    h->heap_size -= 1; // retreatLast
+    downHeap(h); // downheap
+    return key; // key값 리턴
+}
+
 void printHeap(HeapType *h)
 {
     for(int i = 1; i <= h->heap_size; i++)
@@ -56,5 +83,8 @@ void main()
     insertItem(&heap, 4);
     insertItem(&heap, 8);
     insertItem(&heap, 2);
+    printHeap(&heap);
+
+    printf("deleted key: %d\n", removeMin(&heap));
     printHeap(&heap);
 }

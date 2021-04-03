@@ -71,9 +71,30 @@ void printHeap(HeapType *h)
     printf("\n");
 }
 
+void heapSort(HeapType *h, int list[]) // 인자: 원본 힙, 정렬된 결과 저장할 배열
+{
+    HeapType heap; // 구조체 선언
+    init(&heap);
+    for(int i = 1; i <= h->heap_size; i++)
+    {
+        heap.heap[i] = h->heap[i]; // 포인터 아니니까 .으로 접근
+        heap.heap_size++;
+    }  
+    for(int i = 1; i <= h->heap_size; i++)
+        list[i] = removeMin(&heap); // 작은 값부터 순서대로 저장됨
+}
+
+void printArray(int list[], int n)
+{
+    for(int i = 1; i <= n; i++)
+        printf("[%d] ", list[i]);
+    printf("\n");
+}
+
 void main()
 {
     HeapType heap;
+    int list[MAX_ELEMENT] = {0};
     init(&heap);
     insertItem(&heap, 5);
     insertItem(&heap, 3);
@@ -85,6 +106,11 @@ void main()
     insertItem(&heap, 2);
     printHeap(&heap);
 
-    printf("deleted key: %d\n", removeMin(&heap));
-    printHeap(&heap);
+    // 힙 정렬
+    heapSort(&heap, list);
+    printArray(list, heap.heap_size);
+
+    // 힙 삭제
+    // printf("deleted key: %d\n", removeMin(&heap));
+    // printHeap(&heap); 
 }

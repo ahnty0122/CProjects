@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MAX_ELEMENT 100
 
@@ -82,6 +83,18 @@ void heapSort(HeapType *h, int list[]) // 인자: 원본 힙, 정렬된 결과 저장할 배열
     }  
     for(int i = 1; i <= h->heap_size; i++)
         list[i] = removeMin(&heap); // 작은 값부터 순서대로 저장됨
+        // 제자리 힙과 달리 별도 공간에 저장해서 정렬
+}   
+
+void inPlaceHeapSort(HeapType *h)
+{   
+    int size = h -> heap_size;
+    int key; // 최솟값 기억할 변수
+    for(int i = 0; i < size; i++)
+    {
+        key = removeMin(h); // 하나씩 받아와서 삭제
+        h->heap[h->heap_size + 1] = key;
+    }
 }
 
 void printArray(int list[], int n)
@@ -95,20 +108,18 @@ void main()
 {
     HeapType heap;
     int list[MAX_ELEMENT] = {0};
+    srand(time(NULL));
     init(&heap);
-    insertItem(&heap, 5);
-    insertItem(&heap, 3);
-    insertItem(&heap, 7);
-    insertItem(&heap, 4);
-    insertItem(&heap, 1);
-    insertItem(&heap, 4);
-    insertItem(&heap, 8);
-    insertItem(&heap, 2);
+    for(int i = 0; i < 15; i++)
+        insertItem(&heap, rand() % 100);
     printHeap(&heap);
-
+    getchar();
+    inPlaceHeapSort(&heap);
+    for(int i = 1; heap.heap[i] > 0; i++) // 0으로 초기화 된 게 그대로인 것 전까지
+        printf("[%d] ", heap.heap[i]);
     // 힙 정렬
-    heapSort(&heap, list);
-    printArray(list, heap.heap_size);
+    // heapSort(&heap, list);
+    // printArray(list, heap.heap_size);
 
     // 힙 삭제
     // printf("deleted key: %d\n", removeMin(&heap));

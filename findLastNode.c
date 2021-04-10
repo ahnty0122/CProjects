@@ -88,10 +88,11 @@ void binaryExpansion(int num, HeapType *h, stack* L)
     push(L, num);
 }
 
-int findLastNode(HeapType *h, int num)
+int findLastNode(HeapType *h)
 {
     stack S;
     init_stack(&S);
+    int num = h->heap_size;
     binaryExpansion(num, h, &S);
     printf("---------이진수열 출력---------\n");
     traverse(&S);
@@ -105,7 +106,7 @@ int findLastNode(HeapType *h, int num)
         else   
             v = v * 2 + 1;
     }
-    return v;
+    return h->heap[v];
 }
 
 void main()
@@ -119,5 +120,5 @@ void main()
         insertItem(&heap, rand() % 100);
     printf("-----------힙 출력-----------\n");    
     printHeap(&heap);
-    printf("%d", heap.heap[findLastNode(&heap, num)]);
+    printf("%d", findLastNode(&heap));
 }

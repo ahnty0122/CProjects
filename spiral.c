@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ROW 4
-#define COLUMN 5
+#define ROW 5
+#define COLUMN 6
 
 // 나선형 행렬 만들기
 void spiral(int A[][COLUMN])

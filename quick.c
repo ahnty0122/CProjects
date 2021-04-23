@@ -7,6 +7,7 @@
 #define MAX_SIZE 15
 #define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
 
+// pivot 찾는 함수
 int partition(int list[], int left, int right)
 {
     int pivot, temp, low, high;
@@ -19,11 +20,11 @@ int partition(int list[], int left, int right)
     {
         do
             low++;
-        while(list[low] < pivot);
+        while(list[low] < pivot); // pivot보다 큰 원소 나오면 stop
 
         do
             high--;
-        while(list[high] > pivot);
+        while(list[high] > pivot); // pivot보다 작은 원소 나오면 stop
     
         for(int i = 0; i < MAX_SIZE; i ++)
             printf("[%d] ", list[i]);
@@ -42,8 +43,8 @@ void quick_sort(int list[], int left, int right)
     if(left < right)
     {
         int q = partition(list, left, right);
-        quick_sort(list, left, q - 1);
-        quick_sort(list, q + 1, right);
+        quick_sort(list, left, q - 1); // 왼쪽 sublist 대상 재귀
+        quick_sort(list, q + 1, right); // 오른쪽 sublist 대상 재귀
     }
 }
 
@@ -55,6 +56,7 @@ void main()
         list[i] = rand() % 100;
     for(int i = 0; i < MAX_SIZE; i ++)
         printf("[%d] ", list[i]);
+    printf("\n");
     quick_sort(list, 0, MAX_SIZE - 1);
     for(int i = 0; i < MAX_SIZE; i ++)
         printf("[%d] ", list[i]);

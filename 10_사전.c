@@ -48,6 +48,19 @@ void makeDict(DictType* d)
     insertValue(d);
 }
 
+void insertion_sort(DictType* d)
+{
+    int i, j;
+    element item;
+    for(i = 1; i < SIZE; i++)
+    {
+        item = d->dict[i];
+        for(j = i - 1; j >= 0 && d->dict[j].key > item.key; j--)
+            d->dict[j + 1] = d->dict[j];
+        d->dict[j + 1] = item;
+    }
+}
+
 void printDict(DictType* d)
 {
     printf("Key value \n========== \n");
@@ -67,4 +80,11 @@ int main()
     srand(time(NULL));
     makeDict(&d);
     printDict(&d);
+    getchar();
+    printf("\n");
+    insertion_sort(&d);
+    printDict(&d);
+    getchar();
+
+    return 0;
 }

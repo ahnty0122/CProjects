@@ -63,6 +63,7 @@ void insertion_sort(DictType* d)
 
 int rFindElement(DictType* d, int key, int l, int r)
 {
+    // 재귀 방식의 검색
     int mid;
     if(l <= r)
     {
@@ -75,6 +76,41 @@ int rFindElement(DictType* d, int key, int l, int r)
             return rFindElement(d, key, mid + 1, r);
     }
     return -1;
+}
+
+int FindElement(DictType* d, int key, int l, int r)
+{
+    // 재귀 x
+    int mid;
+    while(l <= r)
+    {
+        mid = (l + r) / 2;
+        if(key == d->dict[mid].key)
+            return mid;
+        else if(key < d->dict[mid].key)
+            r = mid - 1;
+        else
+            l = mid + 1;
+    }
+    return -1;
+}
+
+element removeElement(DictType* d, int key)
+{
+    int index = FindElement(d, key, 0, d->size - 1);
+    if(index == -1)
+    {
+        printf("삭제할 요소가 없습니다.\n");
+        // return;
+    }
+    else
+    {
+        element item = d->dict[index];
+        for(int i = index; i < d->size - 1; i++)
+            d->dict[i] = d->dict[i + 1];
+        d->size--;
+        return item;
+    }
 }
 
 void printDict(DictType* d)
@@ -105,7 +141,8 @@ int main()
     printf("\n검색할 키값을 입력: ");
     int key;
     scanf("%d", &key);
-    int index = rFindElement(&d, key, 0, SIZE - 1);
+    int index = FindElement(&d, key, 0, SIZE - 1);
+    // int index = rFindElement(&d, key, 0, SIZE - 1);
     if(index == -1)
         printf("\n검색에 실패하였음\n");
     else
@@ -115,6 +152,11 @@ int main()
             printf("%c", d.dict[index].value[j]);
         printf("이 검색되었음\n");
     }
+
+    printf("\n삭제할 키값을 입력: ");
+    scanf("%d", &key);
+    removeElement(&d, key);
+    printDict(&d);   
 
     return 0;
 }

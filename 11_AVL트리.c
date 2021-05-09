@@ -257,14 +257,52 @@ TreeNode* inOrderSucc(TreeNode* w)
     return w;
 }
 
+void searchAndFixAfterRemoval(TreeType* T, TreeNode* w)
+{
+    TreeNode* z = w;
+    TreeNode* y;
+    TreeNode* x;
+    TreeNode* b;
+    x = NULL;
+    while(heightUpdateAndBalanceCheck(z))
+    {
+        if (z == NULL)
+            return;
+        z = z->parent;
+    }    
+
+    // 2
+    if(z->left->height > z->right->height)
+        y = z->left;
+    else  
+        y = z->right;
+
+    // 3
+    if(y->left->height > y->right->height)
+        x = y->left;
+    else if(y->left->height < y->right->height)
+        x = y->right;
+    else if(z->left == y)
+        x = y->left;
+    else if(z->right == y)
+        x = y->right;
+    
+    // 4
+    b = restructure(T, x);
+
+    // 5 
+    searchAndFixAfterRemoval(T, b);
+}
+
 int removeElement(TreeType* T, int k)
 {
-    TreeNode* w = treeSearch(T->root, k);
+    TreeNode* w, * z, * y, * zs;
+    
+    w = treeSearch(T->root, k);
 
     if(isExternal(w))
         return 0;
     
-    TreeNode* z, * y, * zs;
     z = w->left;
     if(!isExternal(z))
         z = w->right;
@@ -278,7 +316,7 @@ int removeElement(TreeType* T, int k)
         w->key = y->key;
         zs = reduceExternal(T, z);
     }
-    searchAndFixAfterInsertion(T, zs->parent);
+    searchAndFixAfterRemoval(T, zs->parent);
     return k;
 }
 
@@ -308,5 +346,11 @@ int main()
     insertItem(T, 48);
     insertItem(T, 62);
     insertItem(T, 54);
+    preOrder(T->root); printf("\n");
+
+    printf("삭제할 키 입력: ");
+    int key;
+    scanf("%d", &key);
+    removeElement(T, key);
     preOrder(T->root); printf("\n");
 }

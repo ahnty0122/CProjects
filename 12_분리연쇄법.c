@@ -53,7 +53,7 @@ int removeElement(HashType* HT, int key)
         else
             p = p->next;
     }
-    return count;
+    return count; 
 }
 
 int findElement(HashType* HT, int key)

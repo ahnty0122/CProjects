@@ -40,8 +40,11 @@ void floyd(GraphType* g)
     {
         for(i = 0; i < g->n; i++)
             for(j = 0; j < g->n; j++)
-                if(A[i][k] == 1 && A[k][j] == 1)
-                    A[i][j] = 1;
+                // if(A[i][k] == 1 && A[k][j] == 1)
+                //     A[i][j] = 1;
+                if(A[i][k] + A[k][j] < A[i][j])
+                    A[i][j] = A[j][k] + A[k][j];
+                    // 최적의 탐색하는 경로 구할 때
         printA(g);
     }
 }

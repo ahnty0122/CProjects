@@ -43,7 +43,7 @@ int rAirtelForward(int d)
 
 int main()
 {
-    // printf("%d\n", rAirtelForward(5));
+    printf("%d\n", rAirtelForward(5));
     printf("%d\n", airtel(5));
     return 0;
 }

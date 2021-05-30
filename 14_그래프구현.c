@@ -91,6 +91,48 @@ void insertEdges(int v1, int v2)
     insertIncidentEdge(v, v2, p);
 }
 
+void dfs(Vertex* v)
+{
+    IncidentEdge* q;
+    if(v->isFresh == 0)
+    {
+        printf("[%d] ", v->num);
+        v->isFresh = 1;
+    }
+    for(q = v->top; q != NULL; q = q->next)
+    {
+        v = findVertex(q->adjVertex);
+        if(v->isFresh == 0)
+            dfs(v);
+    }
+}
+
+void bfs(Vertex* v)
+{
+    IncidentEdge* q;
+    Vertex* p;
+    if(v->isFresh == 0)
+    {
+        printf("[%d] ", v->num);
+        v->isFresh == 1;
+    }
+    while(v != NULL)
+    {
+        for(q = v->top; q != NULL; q = q->next)
+        {
+            p = findVertex(q->adjVertex);
+            if(p->isFresh == 0)
+            {
+                printf("[%d] ", p->num);
+                p->isFresh == 1;
+            }
+        }
+        v = v->next;
+        bfs(v);
+    }
+    return;
+}
+
 void print()
 {
     Vertex* p = vHead;

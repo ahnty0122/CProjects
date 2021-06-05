@@ -69,7 +69,7 @@ void process(Graph* G, int num)
     printf("\n");
 }
 
-void proces2(Graph* G, int v1, int v2, int w)
+void process2(Graph* G, int v1, int v2, int w)
 {
     // 노드 가중치 바꾸고,,
     Vertex* p = G->v[v1];
@@ -100,4 +100,6 @@ int main()
     insertEdge(&G, 4, 2, 4);
     insertEdge(&G, 3, 4, 5);
     print(&G);
+
+    process(&G, 4);
 }

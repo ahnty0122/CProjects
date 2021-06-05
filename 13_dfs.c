@@ -112,6 +112,32 @@ void dfs(Vertex* v)
     }
 }
 
+void bfs(Vertex* v)
+{
+    IncidentEdge* q;
+    Vertex* p;
+    if(v->isFresh == 0)
+    {
+        printf("[%d] ", v->num);
+        v->isFresh = 1;
+    }
+    while(v != NULL)
+    {
+        for(q = v->top; q != NULL; q = q->next)
+        {
+            p = findVertex(q->adjVertex);
+            if(p->isFresh == 0)
+            {
+                printf("[%d] ", p->num);
+                p->isFresh = 1;
+            }
+        }
+        v = v->next;
+        bfs(v);
+    }
+    return;
+}
+
 void print()
 {
     Vertex* p = vHead;
@@ -142,7 +168,16 @@ int main()
     insertEdges(6, 8);
     insertEdges(7, 9);
     insertEdges(8, 9);
-
+    
+    // insertEdges(1, 2);
+    // insertEdges(1, 5);
+    // insertEdges(2, 3);
+    // insertEdges(4, 5);
+    // insertEdges(5, 2);
+    // insertEdges(5, 3);
+    // insertEdges(5, 6);
+    // insertEdges(6, 3);
     print();
-    dfs(vHead);
+    // dfs(vHead);
+    bfs(vHead);
 }

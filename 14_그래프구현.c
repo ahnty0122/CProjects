@@ -114,7 +114,7 @@ void bfs(Vertex* v)
     if(v->isFresh == 0)
     {
         printf("[%d] ", v->num);
-        v->isFresh == 1;
+        v->isFresh = 1;
     }
     while(v != NULL)
     {
@@ -124,7 +124,7 @@ void bfs(Vertex* v)
             if(p->isFresh == 0)
             {
                 printf("[%d] ", p->num);
-                p->isFresh == 1;
+                p->isFresh = 1;
             }
         }
         v = v->next;

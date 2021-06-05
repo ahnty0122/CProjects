@@ -27,6 +27,20 @@ void sort(Dict D[])
     }
 }
 
+int findElement(Dict d[], int value)
+{
+    // Àç±Í x
+    int i = 0;
+    while(i < SIZE)
+    {
+        if(value == d[i].elem)
+            return d[i].idx;
+        else
+            i++;
+    }
+    return -1;
+}
+
 void findIndexPair(Dict D[], int A[], int s)
 {
     int j;
@@ -36,11 +50,12 @@ void findIndexPair(Dict D[], int A[], int s)
         j = findElement(D, v);
         if(j != -1)
         {
-
+            printf("A[%d] + A[%d] µ¡¼ÀÀÌ %d\n", i, j, s);
+            break;
         }
     }
-    if(j == -1)
-        printf("Not Found\n");
+    // if(j == -1)
+    //     printf("Not Found\n");
 }
 
 void buildDict(Dict D[], int A[])
@@ -62,6 +77,7 @@ int main()
     for(int i = 0; i < SIZE; i++)
         printf("(%d, %d) ", D[i].elem, D[i].idx);
     printf("\n");
+    findIndexPair(D, A, 13);
 
     return 0;
 }

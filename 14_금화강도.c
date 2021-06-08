@@ -1,4 +1,4 @@
-// 에어텔 문제의 2D 버전
+// 에어텔 문제의 2D 버전 - 동적프로그래밍
 #include <stdio.h>
 #include <stdlib.h>
 

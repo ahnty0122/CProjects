@@ -4,22 +4,22 @@
 
 typedef struct Edge
 {
-    int vNum1;
-    int vNum2;
+    int vNum1; // 간선1
+    int vNum2; // 간선2
     struct Edge* next;
 }Edge;
 
 typedef struct IncidentEdge // 인접 정점
 {
     int adjVertex;
-    Edge* e;
+    Edge* e; // 간선하고 연결
     struct IncidentEdge* next;
 }IncidentEdge;
 
 typedef struct Vertex
 {
     int num;
-    int isFresh;
+    // int isFresh; 
     struct Vertex* next;
     IncidentEdge* top;
 }Vertex;
@@ -32,6 +32,7 @@ int in[6]; // 진입차수 배열, 정점 6개
 
 #define N 10
 
+// 원형 큐, 배열로 구현
 typedef struct
 {
     int element[N];
@@ -74,13 +75,14 @@ int dequeue(Queue* Q)
     return Q->element[Q->front];
 }
 
+// 정점을 만들고 연결리스트로 연결
 void makeVertices()
 {
     Vertex* p = (Vertex*)malloc(sizeof(Vertex));
     p->num = ++vCount;
     p->top = NULL;
     p->next = NULL;
-    p->isFresh = 0;
+    // p->isFresh = 0;
     Vertex* q = vHead;
     if(q == NULL)
         vHead = p;
@@ -92,6 +94,7 @@ void makeVertices()
     }
 }
 
+// 인접 간선, 정점 쉽게 판단 위한 함수
 void insertIncidentEdge(Vertex* v, int av, Edge* e)
 {
     IncidentEdge* p = (IncidentEdge*)malloc(sizeof(IncidentEdge));
@@ -136,15 +139,20 @@ void insertEdges(int v1, int v2)
     insertIncidentEdge(v, v2, p);
 }
 
+// 진입차수 계산
 void inDegree()
 {
     Vertex* p = vHead;
     IncidentEdge* q;
+    // 각 정점 별로 움직임
     for(; p != NULL; p = p->next)
         for(q = p->top; q != NULL; q = q->next)
+            // 모든 정점에서 나와 연결되어 있는 연결정점들 계산
+            // 진입차수 입력
             in[q->adjVertex - 1]++;
 }
 
+// 위상정렬
 void topologicalSort()
 {
     Queue q;
@@ -154,6 +162,7 @@ void topologicalSort()
     inDegree();
 
     for(int i = 0; i < 6; i++)
+        // 진입차수 0인 애들 집어넣기
         if(in[i] == 0)
             enqueue(&q, i + 1);
     
@@ -165,7 +174,9 @@ void topologicalSort()
         r = p->top;
         while(r != NULL)
         {
+            // dequeue 후 진입차수 빼기
             in[r->adjVertex - 1]--;
+            // 진입차수 0이면 enqueue
             if(in[r->adjVertex - 1] == 0)
                 enqueue(&q, r->adjVertex);
             r = r->next;
